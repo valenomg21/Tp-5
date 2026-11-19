@@ -279,7 +279,12 @@ export function ClienteFichaPanel({
                       {cliente.ultimasFacturas.map((f) => (
                         <TableRow key={f.id}>
                           <TableCell className="font-mono text-xs font-semibold">
-                            {f.numeroFormateado}
+                            <Link
+                              href={`/ventas/${f.id}`}
+                              className="hover:underline"
+                            >
+                              {f.numeroFormateado}
+                            </Link>
                           </TableCell>
                           <TableCell className="text-xs tabular-nums text-muted-foreground">
                             {formatearFechaHora(f.fecha)}
@@ -436,6 +441,16 @@ export function ClienteFichaPanel({
                             {cargandoReciboId === m.pagoId
                               ? "Cargando..."
                               : "Recibo"}
+                          </Button>
+                        ) : m.facturaId !== null ? (
+                          <Button
+                            variant="outline"
+                            size="xs"
+                            nativeButton={false}
+                            render={<Link href={`/ventas/${m.facturaId}`} />}
+                          >
+                            <FileText className="size-3.5" />
+                            Factura
                           </Button>
                         ) : (
                           <Text variant="small" as="span">

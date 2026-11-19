@@ -197,7 +197,16 @@ export function MovimientosPanel({
                         {m.usuario.nombre}
                       </TableCell>
                       <TableCell className="font-mono text-xs text-muted-foreground">
-                        {m.referencia ? `Factura ${m.referencia.numero}` : "—"}
+                        {m.referencia ? (
+                          <Link
+                            href={`/ventas/${m.referencia.facturaId}`}
+                            className="text-foreground hover:underline"
+                          >
+                            Factura {m.referencia.numero}
+                          </Link>
+                        ) : (
+                          "—"
+                        )}
                       </TableCell>
                     </TableRow>
                   );
