@@ -40,7 +40,8 @@ function exigirRolValido(usuario: UsuarioSesion) {
 export async function registrarPago(
   usuario: UsuarioSesion,
   clienteId: number,
-  datosSinValidar: unknown
+  datosSinValidar: unknown,
+  opciones?: { fecha?: string }
 ): Promise<PagoReciboPublico> {
   exigirRolValido(usuario);
 
@@ -99,7 +100,7 @@ export async function registrarPago(
 
     const numero = Number(ultimo?.maxNumero ?? 0) + 1;
     const numeroRecibo = formatearNumeroRecibo(PUNTO_VENTA_DEFAULT, numero);
-    const fechaPago = new Date().toISOString();
+    const fechaPago = opciones?.fecha ?? new Date().toISOString();
 
     const [pago] = await tx
       .insert(pagos)
