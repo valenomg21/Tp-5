@@ -1,0 +1,33 @@
+# Documentación de planificación local (no subir al repositorio)
+documents/
+
+# Dependencias
+node_modules/
+.pnpm-store/
+
+# Next.js
+.next/
+out/
+build/
+next-env.d.ts
+*.tsbuildinfo
+
+# Variables de entorno
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Base de datos SQLite local
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+
+# Vercel y sistema
+.vercel
+coverage/
+.DS_Store
+Thumbs.db
