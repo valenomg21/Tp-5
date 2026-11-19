@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 const appName = process.env.NEXT_PUBLIC_APP_NAME ?? "Sistema de Gestión Comercial";
@@ -17,6 +18,7 @@ export default function RootLayout({
     <html lang="es">
       <body className="min-h-screen bg-background text-foreground font-sans antialiased">
         {children}
+        <Toaster richColors position="top-right" />
       </body>
     </html>
   );
