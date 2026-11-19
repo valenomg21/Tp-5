@@ -95,6 +95,26 @@
 }
 
 @media print {
+  body * {
+    visibility: hidden !important;
+  }
+  .printable-area,
+  .printable-area * {
+    visibility: visible !important;
+  }
+  .printable-area {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 24px !important;
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+    border: none !important;
+    transform: none !important;
+  }
   .no-print {
     display: none !important;
   }
