@@ -120,7 +120,7 @@ export function AppShell({
 
   return (
     <div className="min-h-screen bg-background">
-      <aside className="hidden border-r border-sidebar-border bg-sidebar lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
+      <aside className="no-print hidden border-r border-sidebar-border bg-sidebar lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
         <div className="flex h-14 items-center gap-2.5 border-b border-sidebar-border px-4">
           <div className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
             <Store className="size-4" />
@@ -150,8 +150,8 @@ export function AppShell({
         </div>
       </aside>
 
-      <div className="flex min-h-screen flex-col lg:pl-64">
-        <header className="sticky top-0 z-30 flex h-14 items-center justify-between gap-3 border-b border-border bg-card/95 px-4 backdrop-blur sm:px-6">
+      <div className="flex min-h-screen min-w-0 flex-col overflow-x-clip lg:pl-64 print:pl-0">
+        <header className="no-print sticky top-0 z-30 flex h-14 items-center justify-between gap-3 border-b border-border bg-card/95 px-4 backdrop-blur sm:px-6">
           <Row gap="sm" align="center" className="min-w-0">
             <Sheet open={menuAbierto} onOpenChange={setMenuAbierto}>
               <SheetTrigger
@@ -231,7 +231,7 @@ export function AppShell({
           </Row>
         </header>
 
-        <main className="mx-auto w-full max-w-7xl flex-1 p-4 sm:p-6">
+        <main className="mx-auto w-full max-w-7xl min-w-0 flex-1 p-4 sm:p-6">
           {children}
         </main>
       </div>

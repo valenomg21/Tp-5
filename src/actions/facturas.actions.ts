@@ -10,6 +10,7 @@ export async function anularFacturaAction(
 ) {
   return runAuthAction(async (usuario) => {
     const factura = await anularFactura(usuario, id, datosSinValidar);
+    revalidatePath("/");
     revalidatePath("/ventas");
     revalidatePath(`/ventas/${id}`);
     revalidatePath("/productos");

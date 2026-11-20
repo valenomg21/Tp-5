@@ -8,6 +8,7 @@ import { registrarMovimientoManual } from "@/services/stock.service";
 export async function crearProductoAction(datosSinValidar: unknown) {
   return runAuthAction(async (usuario) => {
     const creado = await crearProducto(usuario, datosSinValidar);
+    revalidatePath("/");
     revalidatePath("/productos");
     return creado;
   });
@@ -19,6 +20,7 @@ export async function editarProductoAction(
 ) {
   return runAuthAction(async (usuario) => {
     const actualizado = await editarProducto(usuario, id, datosSinValidar);
+    revalidatePath("/");
     revalidatePath("/productos");
     revalidatePath(`/productos/${id}`);
     return actualizado;
@@ -35,6 +37,7 @@ export async function registrarMovimientoStockAction(
       productoId,
       datosSinValidar
     );
+    revalidatePath("/");
     revalidatePath("/productos");
     revalidatePath(`/productos/${productoId}`);
     return movimiento;

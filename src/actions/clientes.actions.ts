@@ -33,6 +33,7 @@ export async function registrarPagoAction(
 ) {
   return runAuthAction(async (usuario) => {
     const recibo = await registrarPago(usuario, clienteId, datosSinValidar);
+    revalidatePath("/");
     revalidatePath("/clientes");
     revalidatePath(`/clientes/${clienteId}`);
     revalidatePath("/clientes/saldos");
