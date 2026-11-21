@@ -6,15 +6,15 @@ Aplicación web para la gestión comercial de un comercio minorista: administrac
 
 ## Integrantes
 
-- **Nombre y Apellido** — Legajo: `_______`
-- **Nombre y Apellido** — Legajo: `_______`
-- **Nombre y Apellido** — Legajo: `_______`
+- **Valentin Jose Menendez** — Legajo: `54273`
+- **Jazmin Vargas Mopty** — Legajo: `63355`
+- **Hernan Medina Oliva** — Legajo: `63408`
 
 ---
 
 ## URL pública
 
-- **Aplicación en Vercel:** `https://<tu-proyecto>.vercel.app` *(completar con el enlace publicado)*
+- **Aplicación en Vercel:** `https://tp-5-three.vercel.app/login` **
 
 ---
 
