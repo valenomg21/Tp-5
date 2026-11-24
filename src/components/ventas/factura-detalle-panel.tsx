@@ -7,6 +7,7 @@ import { Ban, PlusCircle, Printer } from "lucide-react";
 import { anularFacturaAction } from "@/actions/facturas.actions";
 import { Grid, Heading, Row, Stack, Text } from "@/components/layout/primitives";
 import { FormField } from "@/components/shared/form-field";
+import { PokeballIcon } from "@/components/shared/pokeball-icon";
 import { StatusBadge } from "@/components/shared/status-badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -116,7 +117,10 @@ export function FacturaDetallePanel({
         <CardContent className="space-y-6 py-6">
           <Row justify="between" align="start" wrap gap="md">
             <Stack gap="xs">
-              <Text variant="label">{appName}</Text>
+              <Row gap="xs" align="center">
+                <PokeballIcon className="size-4" />
+                <Text variant="label">{appName}</Text>
+              </Row>
               <Heading level={1}>Comprobante de venta</Heading>
               <Text variant="small">
                 Documento interno no válido como factura fiscal ante ARCA.

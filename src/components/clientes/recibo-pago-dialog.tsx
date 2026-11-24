@@ -2,6 +2,7 @@
 
 import { Printer } from "lucide-react";
 import { Heading, Row, Stack, Text } from "@/components/layout/primitives";
+import { PokeballIcon } from "@/components/shared/pokeball-icon";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -27,7 +28,7 @@ export function ReciboPagoDialog({
   onClose: () => void;
 }) {
   const appName =
-    process.env.NEXT_PUBLIC_APP_NAME ?? "Sistema de Gestión Comercial";
+    process.env.NEXT_PUBLIC_APP_NAME ?? "PokéDeck TCG";
 
   return (
     <Dialog
@@ -43,7 +44,10 @@ export function ReciboPagoDialog({
               <DialogHeader>
                 <Row justify="between" align="start" gap="sm">
                   <Stack gap="xs">
-                    <Text variant="label">{appName}</Text>
+                    <Row gap="xs" align="center">
+                      <PokeballIcon className="size-4" />
+                      <Text variant="label">{appName}</Text>
+                    </Row>
                     <DialogTitle>Recibo de pago</DialogTitle>
                     <DialogDescription>
                       Comprobante interno de cancelación en cuenta corriente.

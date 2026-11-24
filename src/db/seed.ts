@@ -5,7 +5,11 @@ import { client, db } from "./index";
 import {
   categorias,
   clientes,
+  facturaItems,
   facturas,
+  movimientosCuenta,
+  movimientosStock,
+  pagos,
   productos,
   usuarios,
 } from "./schema";
@@ -41,12 +45,12 @@ const USUARIOS_INICIALES = [
 ];
 
 const CATEGORIAS_INICIALES = [
-  "Herramientas Manuales",
-  "Iluminación y Electricidad",
-  "Pinturería y Acabados",
-  "Fijaciones y Herrajes",
-  "Seguridad Industrial",
-  "Insumos y Limpieza",
+  "Sobres (Booster Packs)",
+  "Elite Trainer Boxes (ETB)",
+  "Cajas y Latas (Bundles & Tins)",
+  "Mazos Listos (Battle Decks)",
+  "Cartas Sueltas (Singles)",
+  "Accesorios y Protección",
 ] as const;
 
 interface ProductoSeedDef {
@@ -59,251 +63,256 @@ interface ProductoSeedDef {
 }
 
 const PRODUCTOS_INICIALES: ProductoSeedDef[] = [
-  // Herramientas Manuales
+  // Sobres (Booster Packs)
   {
-    codigo: "FER-001",
-    descripcion: "Martillo galponero cabo fibra 20 oz",
-    categoria: "Herramientas Manuales",
-    precio: 1450000,
-    stockMinimo: 12,
-    stockInicial: 18,
-  },
-  {
-    codigo: "FER-002",
-    descripcion: "Juego de destornilladores aislados x6",
-    categoria: "Herramientas Manuales",
-    precio: 1890000,
-    stockMinimo: 10,
-    stockInicial: 65,
-  },
-  {
-    codigo: "FER-003",
-    descripcion: "Pinza universal cromo vanadio 8\"",
-    categoria: "Herramientas Manuales",
-    precio: 1120000,
-    stockMinimo: 10,
-    stockInicial: 60,
-  },
-  {
-    codigo: "FER-004",
-    descripcion: "Cinta métrica reforzada 5 metros",
-    categoria: "Herramientas Manuales",
-    precio: 640000,
-    stockMinimo: 15,
-    stockInicial: 20,
-  },
-  {
-    codigo: "FER-005",
-    descripcion: "Llave francesa ajustable 10\"",
-    categoria: "Herramientas Manuales",
-    precio: 1580000,
-    stockMinimo: 8,
-    stockInicial: 55,
-  },
-  // Iluminación y Electricidad
-  {
-    codigo: "ILU-001",
-    descripcion: "Lámpara LED bulbo 12W luz cálida",
-    categoria: "Iluminación y Electricidad",
-    precio: 295000,
+    codigo: "SOB-001",
+    descripcion: "Sobre Scarlet & Violet: Prismatic Evolutions",
+    categoria: "Sobres (Booster Packs)",
+    precio: 2650000,
     stockMinimo: 25,
     stockInicial: 30,
   },
   {
-    codigo: "ILU-002",
-    descripcion: "Reflector LED exterior 50W IP65",
-    categoria: "Iluminación y Electricidad",
-    precio: 1640000,
-    stockMinimo: 8,
-    stockInicial: 50,
+    codigo: "SOB-002",
+    descripcion: "Sobre Scarlet & Violet: Surging Sparks",
+    categoria: "Sobres (Booster Packs)",
+    precio: 1950000,
+    stockMinimo: 24,
+    stockInicial: 140,
   },
   {
-    codigo: "ILU-003",
-    descripcion: "Prolongador eléctrico 5 bocas 3 metros",
-    categoria: "Iluminación y Electricidad",
-    precio: 980000,
-    stockMinimo: 10,
-    stockInicial: 65,
-  },
-  {
-    codigo: "ILU-004",
-    descripcion: "Cinta aisladora PVC negra 20 metros",
-    categoria: "Iluminación y Electricidad",
-    precio: 185000,
+    codigo: "SOB-003",
+    descripcion: "Sobre Scarlet & Violet: 151 (Edición Especial)",
+    categoria: "Sobres (Booster Packs)",
+    precio: 2800000,
     stockMinimo: 20,
-    stockInicial: 110,
+    stockInicial: 24,
   },
   {
-    codigo: "ILU-005",
-    descripcion: "Cable unipolar 2.5 mm rollo x100 metros",
-    categoria: "Iluminación y Electricidad",
-    precio: 4250000,
-    stockMinimo: 6,
-    stockInicial: 40,
-  },
-  // Pinturería y Acabados
-  {
-    codigo: "PIN-001",
-    descripcion: "Látex interior mate blanco 4 litros",
-    categoria: "Pinturería y Acabados",
-    precio: 2890000,
-    stockMinimo: 8,
-    stockInicial: 55,
-  },
-  {
-    codigo: "PIN-002",
-    descripcion: "Esmalte sintético brillante blanco 1 litro",
-    categoria: "Pinturería y Acabados",
-    precio: 1240000,
-    stockMinimo: 10,
-    stockInicial: 60,
-  },
-  {
-    codigo: "PIN-003",
-    descripcion: "Rodillo antigota lana sintética 22 cm",
-    categoria: "Pinturería y Acabados",
-    precio: 675000,
-    stockMinimo: 12,
-    stockInicial: 75,
-  },
-  {
-    codigo: "PIN-004",
-    descripcion: "Pincel cerda mixta N° 20",
-    categoria: "Pinturería y Acabados",
-    precio: 390000,
-    stockMinimo: 15,
-    stockInicial: 18,
-  },
-  {
-    codigo: "PIN-005",
-    descripcion: "Aguarrás mineral botella 1 litro",
-    categoria: "Pinturería y Acabados",
-    precio: 520000,
-    stockMinimo: 12,
-    stockInicial: 70,
-  },
-  // Fijaciones y Herrajes
-  {
-    codigo: "FIJ-001",
-    descripcion: "Caja tornillos autoperforantes 8x1 x200 u.",
-    categoria: "Fijaciones y Herrajes",
-    precio: 490000,
-    stockMinimo: 15,
-    stockInicial: 95,
-  },
-  {
-    codigo: "FIJ-002",
-    descripcion: "Tarugos nylon 8 mm con tope x100 u.",
-    categoria: "Fijaciones y Herrajes",
-    precio: 360000,
-    stockMinimo: 14,
-    stockInicial: 90,
-  },
-  {
-    codigo: "FIJ-003",
-    descripcion: "Candado bronce macizo 40 mm",
-    categoria: "Fijaciones y Herrajes",
-    precio: 1320000,
-    stockMinimo: 8,
-    stockInicial: 50,
-  },
-  {
-    codigo: "FIJ-004",
-    descripcion: "Bisagra munición acero inoxidable 100 mm",
-    categoria: "Fijaciones y Herrajes",
-    precio: 740000,
-    stockMinimo: 12,
-    stockInicial: 80,
-  },
-  {
-    codigo: "FIJ-005",
-    descripcion: "Adhesivo sellador silicona neutra 280 ml",
-    categoria: "Fijaciones y Herrajes",
-    precio: 615000,
-    stockMinimo: 14,
-    stockInicial: 16,
-  },
-  // Seguridad Industrial
-  {
-    codigo: "SEG-001",
-    descripcion: "Guantes moteados algodón refuerzo PVC",
-    categoria: "Seguridad Industrial",
-    precio: 240000,
+    codigo: "SOB-004",
+    descripcion: "Sobre Scarlet & Violet: Stellar Crown",
+    categoria: "Sobres (Booster Packs)",
+    precio: 1750000,
     stockMinimo: 20,
     stockInicial: 120,
   },
   {
-    codigo: "SEG-002",
-    descripcion: "Antiparra policarbonato transparente antiempaño",
-    categoria: "Seguridad Industrial",
-    precio: 480000,
-    stockMinimo: 12,
-    stockInicial: 70,
+    codigo: "SOB-005",
+    descripcion: "Sobre Scarlet & Violet: Twilight Masquerade",
+    categoria: "Sobres (Booster Packs)",
+    precio: 1850000,
+    stockMinimo: 20,
+    stockInicial: 110,
   },
+
+  // Elite Trainer Boxes (ETB)
   {
-    codigo: "SEG-003",
-    descripcion: "Casco de seguridad con ajuste a cremallera",
-    categoria: "Seguridad Industrial",
-    precio: 1150000,
-    stockMinimo: 8,
-    stockInicial: 45,
-  },
-  {
-    codigo: "SEG-004",
-    descripcion: "Protector auditivo tipo copa 26 dB",
-    categoria: "Seguridad Industrial",
-    precio: 1490000,
+    codigo: "ETB-001",
+    descripcion: "Elite Trainer Box: Prismatic Evolutions",
+    categoria: "Elite Trainer Boxes (ETB)",
+    precio: 34000000,
     stockMinimo: 6,
+    stockInicial: 10,
+  },
+  {
+    codigo: "ETB-002",
+    descripcion: "Elite Trainer Box: Surging Sparks (Pikachu ex)",
+    categoria: "Elite Trainer Boxes (ETB)",
+    precio: 22500000,
+    stockMinimo: 5,
     stockInicial: 40,
   },
   {
-    codigo: "SEG-005",
-    descripcion: "Chaleco reflectivo alta visibilidad talle L",
-    categoria: "Seguridad Industrial",
-    precio: 590000,
-    stockMinimo: 10,
+    codigo: "ETB-003",
+    descripcion: "Elite Trainer Box: Shrouded Fable",
+    categoria: "Elite Trainer Boxes (ETB)",
+    precio: 19500000,
+    stockMinimo: 5,
+    stockInicial: 38,
+  },
+  {
+    codigo: "ETB-004",
+    descripcion: "Elite Trainer Box: Temporal Forces (Walking Wake)",
+    categoria: "Elite Trainer Boxes (ETB)",
+    precio: 21000000,
+    stockMinimo: 5,
+    stockInicial: 36,
+  },
+  {
+    codigo: "ETB-005",
+    descripcion: "Elite Trainer Box: Obsidian Flames (Charmander)",
+    categoria: "Elite Trainer Boxes (ETB)",
+    precio: 23500000,
+    stockMinimo: 4,
+    stockInicial: 35,
+  },
+
+  // Cajas y Latas (Bundles & Tins)
+  {
+    codigo: "CAJ-001",
+    descripcion: "Booster Bundle Surging Sparks (6 sobres)",
+    categoria: "Cajas y Latas (Bundles & Tins)",
+    precio: 14500000,
+    stockMinimo: 6,
+    stockInicial: 55,
+  },
+  {
+    codigo: "CAJ-002",
+    descripcion: "Booster Bundle Prismatic Evolutions (6 sobres)",
+    categoria: "Cajas y Latas (Bundles & Tins)",
+    precio: 18500000,
+    stockMinimo: 6,
+    stockInicial: 48,
+  },
+  {
+    codigo: "CAJ-003",
+    descripcion: "Tin Coleccionista Charizard ex (5 sobres + Promo)",
+    categoria: "Cajas y Latas (Bundles & Tins)",
+    precio: 7400000,
+    stockMinimo: 8,
+    stockInicial: 60,
+  },
+  {
+    codigo: "CAJ-004",
+    descripcion: "Mini Tin Pokémon 151 / Kanto Friends (2 sobres)",
+    categoria: "Cajas y Latas (Bundles & Tins)",
+    precio: 3400000,
+    stockMinimo: 12,
+    stockInicial: 16,
+  },
+  {
+    codigo: "CAJ-005",
+    descripcion: "Collection Box Terapagos ex Ultra-Premium",
+    categoria: "Cajas y Latas (Bundles & Tins)",
+    precio: 29500000,
+    stockMinimo: 4,
+    stockInicial: 30,
+  },
+
+  // Mazos Listos (Battle Decks)
+  {
+    codigo: "MAZ-001",
+    descripcion: "League Battle Deck: Charizard ex (Competitivo 60 cartas)",
+    categoria: "Mazos Listos (Battle Decks)",
+    precio: 9200000,
+    stockMinimo: 6,
+    stockInicial: 50,
+  },
+  {
+    codigo: "MAZ-002",
+    descripcion: "League Battle Deck: Gardevoir ex",
+    categoria: "Mazos Listos (Battle Decks)",
+    precio: 8800000,
+    stockMinimo: 6,
+    stockInicial: 45,
+  },
+  {
+    codigo: "MAZ-003",
+    descripcion: "ex Battle Deck: Chien-Pao ex (Español)",
+    categoria: "Mazos Listos (Battle Decks)",
+    precio: 3600000,
+    stockMinimo: 8,
+    stockInicial: 65,
+  },
+  {
+    codigo: "MAZ-004",
+    descripcion: "ex Battle Deck: Tinkaton ex (Español)",
+    categoria: "Mazos Listos (Battle Decks)",
+    precio: 3600000,
+    stockMinimo: 8,
+    stockInicial: 65,
+  },
+  {
+    codigo: "MAZ-005",
+    descripcion: "My First Battle: Pikachu & Bulbasaur (Doble Mazo)",
+    categoria: "Mazos Listos (Battle Decks)",
+    precio: 4900000,
+    stockMinimo: 6,
+    stockInicial: 50,
+  },
+
+  // Cartas Sueltas (Singles)
+  {
+    codigo: "SGL-001",
+    descripcion: "Single: Charizard ex #199/165 SIR (151 - NM)",
+    categoria: "Cartas Sueltas (Singles)",
+    precio: 38000000,
+    stockMinimo: 5,
     stockInicial: 8,
   },
-  // Insumos y Limpieza
   {
-    codigo: "LIM-001",
-    descripcion: "Detergente industrial concentrado 5 litros",
-    categoria: "Insumos y Limpieza",
-    precio: 890000,
+    codigo: "SGL-002",
+    descripcion: "Single: Pikachu ex #238/191 SIR (Surging Sparks - NM)",
+    categoria: "Cartas Sueltas (Singles)",
+    precio: 32000000,
+    stockMinimo: 3,
+    stockInicial: 30,
+  },
+  {
+    codigo: "SGL-003",
+    descripcion: "Single: Umbreon ex #161/131 SIR (Prismatic - NM)",
+    categoria: "Cartas Sueltas (Singles)",
+    precio: 42000000,
+    stockMinimo: 2,
+    stockInicial: 25,
+  },
+  {
+    codigo: "SGL-004",
+    descripcion: "Single: Fezandipiti ex #038/064 (Competitiva - NM)",
+    categoria: "Cartas Sueltas (Singles)",
+    precio: 5800000,
+    stockMinimo: 6,
+    stockInicial: 55,
+  },
+  {
+    codigo: "SGL-005",
+    descripcion: "Single: Prime Catcher #157/162 ACE SPEC (NM)",
+    categoria: "Cartas Sueltas (Singles)",
+    precio: 5200000,
+    stockMinimo: 6,
+    stockInicial: 55,
+  },
+
+  // Accesorios y Protección
+  {
+    codigo: "ACC-001",
+    descripcion: "Folios Dragon Shield Matte Dual 100u (Negro / Rojo)",
+    categoria: "Accesorios y Protección",
+    precio: 2450000,
+    stockMinimo: 15,
+    stockInicial: 95,
+  },
+  {
+    codigo: "ACC-002",
+    descripcion: "Paquete Toploaders Ultra Pro Rígidos 3x4 x25 u.",
+    categoria: "Accesorios y Protección",
+    precio: 1450000,
+    stockMinimo: 20,
+    stockInicial: 110,
+  },
+  {
+    codigo: "ACC-003",
+    descripcion: "Carpeta Álbum Ultra Pro 9 Bolsillos Pikachu",
+    categoria: "Accesorios y Protección",
+    precio: 4200000,
+    stockMinimo: 10,
+    stockInicial: 14,
+  },
+  {
+    codigo: "ACC-004",
+    descripcion: "Deck Box Satin Cube Ultra Pro (Capacidad 100+)",
+    categoria: "Accesorios y Protección",
+    precio: 3100000,
     stockMinimo: 10,
     stockInicial: 65,
   },
   {
-    codigo: "LIM-002",
-    descripcion: "Rollo papel secamanos industrial x2 unidades",
-    categoria: "Insumos y Limpieza",
-    precio: 730000,
-    stockMinimo: 12,
-    stockInicial: 75,
-  },
-  {
-    codigo: "LIM-003",
-    descripcion: "Bolsas consorcio reforzadas 80x110 x10 u.",
-    categoria: "Insumos y Limpieza",
-    precio: 340000,
-    stockMinimo: 18,
-    stockInicial: 100,
-  },
-  {
-    codigo: "LIM-004",
-    descripcion: "Escobillón cerda dura 40 cm con cabo",
-    categoria: "Insumos y Limpieza",
-    precio: 620000,
-    stockMinimo: 8,
-    stockInicial: 50,
-  },
-  {
-    codigo: "LIM-005",
-    descripcion: "Desengrasante multiuso gatillo 750 ml",
-    categoria: "Insumos y Limpieza",
-    precio: 460000,
-    stockMinimo: 10,
-    stockInicial: 60,
+    codigo: "ACC-005",
+    descripcion: "Playmat Oficial Pokémon Lucario & Aura (Neoprene)",
+    categoria: "Accesorios y Protección",
+    precio: 6200000,
+    stockMinimo: 6,
+    stockInicial: 45,
   },
 ];
 
@@ -311,22 +320,22 @@ const CLIENTES_INICIALES = [
   {
     tipoDoc: "CUIT" as const,
     nroDoc: "30-71458920-1",
-    nombre: "Constructora del Sur SRL",
-    domicilio: "Av. Rivadavia 2450, CABA",
+    nombre: "Liga Kanto Buenos Aires SRL",
+    domicilio: "Av. Corrientes 2450, CABA",
     telefono: "11-4589-2010",
-    email: "compras@constructoradelsur.test",
+    email: "compras@ligakanto.test",
     cuentaCorriente: true,
-    limiteCredito: 120000000,
+    limiteCredito: 1000000000,
   },
   {
     tipoDoc: "CUIT" as const,
     nroDoc: "30-68912450-8",
-    nombre: "Mantenimiento Integral Norte SA",
-    domicilio: "Av. Maipú 1820, Vicente López",
+    nombre: "Comiquería Rayquaza Norte SA",
+    domicilio: "Av. Cabildo 1820, CABA",
     telefono: "11-4791-3340",
-    email: "administracion@mantenimientonorte.test",
+    email: "pedidos@rayquazanorte.test",
     cuentaCorriente: true,
-    limiteCredito: 100000000,
+    limiteCredito: 950000000,
   },
   {
     tipoDoc: "DNI" as const,
@@ -336,17 +345,17 @@ const CLIENTES_INICIALES = [
     telefono: "221-512-7789",
     email: "mgomez@correo.test",
     cuentaCorriente: true,
-    limiteCredito: 60000000,
+    limiteCredito: 700000000,
   },
   {
     tipoDoc: "CUIT" as const,
     nroDoc: "27-29345612-4",
-    nombre: "Estudio Arquitectura Belgrano",
-    domicilio: "Juramento 2140, CABA",
+    nombre: "Club Estratégico Paldea",
+    domicilio: "Juramento 2140, Belgrano",
     telefono: "11-4784-9901",
-    email: "obras@estudiobelgrano.test",
+    email: "torneos@clubpaldea.test",
     cuentaCorriente: true,
-    limiteCredito: 90000000,
+    limiteCredito: 900000000,
   },
   {
     tipoDoc: "DNI" as const,
@@ -356,15 +365,15 @@ const CLIENTES_INICIALES = [
     telefono: "11-6241-8832",
     email: "cvega@correo.test",
     cuentaCorriente: true,
-    limiteCredito: 50000000,
+    limiteCredito: 650000000,
   },
   {
     tipoDoc: "CUIT" as const,
     nroDoc: "30-70983112-6",
-    nombre: "Logística Pampeana SRL",
-    domicilio: "Ruta 9 Km 42, Escobar",
-    telefono: "348-442-1190",
-    email: "insumos@logisticapampeana.test",
+    nombre: "Gremio Johto Coleccionables SRL",
+    domicilio: "Bv. Oroño 940, Rosario",
+    telefono: "341-442-1190",
+    email: "mayorista@gremiojohto.test",
     cuentaCorriente: true,
     limiteCredito: null,
   },
@@ -391,10 +400,10 @@ const CLIENTES_INICIALES = [
   {
     tipoDoc: "CUIT" as const,
     nroDoc: "20-34890123-7",
-    nombre: "Taller Mecánico El Progreso",
-    domicilio: "Av. Eva Perón 4120, Lanús",
+    nombre: "Arena Sinnoh Hobby Store",
+    domicilio: "Av. Hipólito Yrigoyen 4120, Lanús",
     telefono: "11-4241-5509",
-    email: "tallerelprogreso@correo.test",
+    email: "contacto@arenasinnoh.test",
     cuentaCorriente: false,
     limiteCredito: null,
   },
@@ -409,6 +418,18 @@ const CLIENTES_INICIALES = [
     limiteCredito: null,
   },
 ];
+
+async function limpiarCatalogoYOperaciones() {
+  console.log("- Limpiando datos previos (--reset) manteniendo usuarios...");
+  await db.delete(movimientosCuenta);
+  await db.delete(pagos);
+  await db.delete(movimientosStock);
+  await db.delete(facturaItems);
+  await db.delete(facturas);
+  await db.delete(productos);
+  await db.delete(categorias);
+  await db.delete(clientes);
+}
 
 async function asegurarUsuario(
   datos: (typeof USUARIOS_INICIALES)[number]
@@ -587,7 +608,6 @@ function construirTimestampFactura(
   const fechaISO = restarDiasISO(hoyISO, diasAtras);
 
   if (diasAtras === 0) {
-    // Asegura que todas las facturas de hoy queden dentro del día argentino y nunca en el futuro.
     const inicioHoyMs = new Date(rangoDiaArgentinaAUTC(hoyISO).inicio).getTime();
     const ahoraSeguroMs = Math.max(inicioHoyMs + 120_000, Date.now() - 60_000);
     const fraccion = (indiceEnElDia + 1) / (totalEnElDia + 1);
@@ -597,7 +617,7 @@ function construirTimestampFactura(
     return new Date(marcaMs).toISOString();
   }
 
-  const horas = 9 + ((indiceEnElDia * 3) % 10);
+  const horas = 10 + ((indiceEnElDia * 3) % 9);
   const minutos = 10 + ((indiceEnElDia * 17) % 45);
   return new Date(
     `${fechaISO}T${String(horas).padStart(2, "0")}:${String(minutos).padStart(
@@ -622,7 +642,6 @@ function construirCalendarioDias(): number[] {
     }
   }
   diasAtrasPorFactura.sort((a, b) => b - a);
-  // 4 facturas para el día de hoy
   diasAtrasPorFactura.push(0, 0, 0, 0);
   return diasAtrasPorFactura;
 }
@@ -644,8 +663,15 @@ async function sembrarOperaciones(
 
   const clientesConCtaCte = clientesLista.filter((c) => c.cuentaCorriente);
   const codigosOrdenados = PRODUCTOS_INICIALES.map((p) => p.codigo);
-  // Códigos pensados para quedar bajo mínimo tras las ventas del seed
-  const codigosRotacionAlta = ["FER-001", "FER-004", "ILU-001", "PIN-004", "FIJ-005", "SEG-005"];
+  // Productos pensados para quedar bajo stock mínimo (y SGL-001 en 0) tras las ventas
+  const codigosRotacionAlta = [
+    "SOB-001",
+    "SOB-003",
+    "ETB-001",
+    "CAJ-004",
+    "SGL-001",
+    "ACC-003",
+  ];
   const marcasTarjeta = ["Visa", "Mastercard", "Cabal", "Naranja X"];
 
   const emitidasContado: number[] = [];
@@ -660,7 +686,6 @@ async function sembrarOperaciones(
     const fecha = construirTimestampFactura(hoyISO, diasAtras, idxDia, totalDia);
     const usuarioEmisor = i % 3 === 0 ? admin : vendedor;
 
-    // Forma de pago: ~22 contado, ~16 tarjeta, ~12 cuenta_corriente
     let forma: FormaPago = "contado";
     if (i % 4 === 1) {
       forma = "cuenta_corriente";
@@ -678,11 +703,9 @@ async function sembrarOperaciones(
       clienteId = cli.id;
     }
 
-    // Selección de 2 o 3 ítems por factura verificando stock disponible en memoria
     const itemsSeleccionados: { productoId: number; cantidad: number }[] = [];
     const idsUsados = new Set<number>();
 
-    // Primer ítem: alterna entre los de rotación alta (en primeras 24 ventas) y rotación normal
     const codigoPrincipal =
       i < 24 && i % 2 === 0
         ? codigosRotacionAlta[Math.floor(i / 2) % codigosRotacionAlta.length]
@@ -708,13 +731,12 @@ async function sembrarOperaciones(
       if (!prodSec || idsUsados.has(prodSec.id) || prodSec.existencia < 1) {
         continue;
       }
-      const cantidad = Math.min((i + j) % 3 + 1, prodSec.existencia);
+      const cantidad = Math.min(((i + j) % 3) + 1, prodSec.existencia);
       itemsSeleccionados.push({ productoId: prodSec.id, cantidad });
       idsUsados.add(prodSec.id);
       prodSec.existencia -= cantidad;
     }
 
-    // Garantía de al menos 1 ítem con stock
     if (itemsSeleccionados.length === 0) {
       for (const codigo of codigosOrdenados) {
         const p = productosMapa.get(codigo);
@@ -726,7 +748,6 @@ async function sembrarOperaciones(
       }
     }
 
-    // Cálculo local solo para determinar montoRecibido en contado
     let subtotalEstimado = 0;
     for (const item of itemsSeleccionados) {
       for (const prod of productosMapa.values()) {
@@ -744,7 +765,7 @@ async function sembrarOperaciones(
             montoRecibido:
               i % 2 === 0
                 ? subtotalEstimado
-                : Math.ceil((subtotalEstimado + 100000) / 100000) * 100000,
+                : Math.ceil((subtotalEstimado + 500000) / 500000) * 500000,
           }
         : forma === "tarjeta"
           ? {
@@ -779,13 +800,13 @@ async function sembrarOperaciones(
   if (emitidasContado[0]) {
     aAnular.push({
       id: emitidasContado[0],
-      motivo: "Error en la carga de cantidades del comprobante",
+      motivo: "Error en edición solicitada por el entrenador al retirar",
     });
   }
   if (emitidasCtaCte[1]) {
     aAnular.push({
       id: emitidasCtaCte[1],
-      motivo: "Devolución total acordada con el cliente",
+      motivo: "Caja sellada reemplazada por pedido de liga",
     });
   }
 
@@ -795,7 +816,6 @@ async function sembrarOperaciones(
     });
   }
 
-  // Registrar pagos parciales y cancelaciones en cuenta corriente usando registrarPago
   const medios = ["transferencia", "efectivo", "tarjeta_debito"] as const;
   let pagosRegistrados = 0;
 
@@ -804,7 +824,6 @@ async function sembrarOperaciones(
     const deuda = await calcularSaldoCliente(db, cli.id);
     if (deuda <= 0) continue;
 
-    // El primer cliente cancela el 100% de su saldo; los siguientes abonan el 45%
     const importePago =
       idx === 0 ? deuda : Math.min(deuda, Math.max(10000, Math.floor((deuda * 45) / 100)));
 
@@ -832,17 +851,26 @@ async function sembrarOperaciones(
 }
 
 async function main() {
-  console.log("Ejecutando seed inicial completo...");
+  const esReset = process.argv.includes("--reset");
+  console.log(
+    esReset
+      ? "Ejecutando seed completo Pokémon TCG con reinicio (--reset)..."
+      : "Ejecutando seed completo Pokémon TCG..."
+  );
 
   const admin = await asegurarUsuario(USUARIOS_INICIALES[0]);
   const vendedor = await asegurarUsuario(USUARIOS_INICIALES[1]);
+
+  if (esReset) {
+    await limpiarCatalogoYOperaciones();
+  }
 
   const [conteoFacturas] = await db.select({ total: count() }).from(facturas);
   const totalFacturasExistentes = Number(conteoFacturas?.total ?? 0);
 
   if (totalFacturasExistentes >= 50) {
     console.log(
-      `- Seed ya aplicado previamente (${totalFacturasExistentes} facturas existentes). No se realizaron duplicados.`
+      `- Seed ya aplicado previamente (${totalFacturasExistentes} facturas existentes). Usá "-- --reset" si deseás reemplazar el catálogo.`
     );
     return;
   }
@@ -852,12 +880,12 @@ async function main() {
   const clientesLista = await asegurarClientes(admin);
 
   console.log(
-    `- Catálogo asegurado: ${categoriasMapa.size} categorías, ${productosMapa.size} productos, ${clientesLista.length} clientes.`
+    `- Catálogo PokéDeck TCG asegurado: ${categoriasMapa.size} categorías, ${productosMapa.size} productos, ${clientesLista.length} clientes.`
   );
 
   await sembrarOperaciones(admin, vendedor, productosMapa, clientesLista);
 
-  console.log("Seed comercial completado correctamente.");
+  console.log("Seed PokéDeck TCG completado correctamente.");
 }
 
 main()

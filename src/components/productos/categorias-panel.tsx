@@ -110,7 +110,7 @@ function CategoriaFormDialog({
                 autoFocus
                 disabled={activo.isPending}
                 aria-invalid={Boolean(activo.fieldErrors.nombre)}
-                placeholder="Ej. Herramientas"
+                placeholder="Ej. Elite Trainer Boxes"
                 value={nombre}
                 onChange={(e) => {
                   setNombre(e.target.value);

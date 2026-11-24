@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
-const appName = process.env.NEXT_PUBLIC_APP_NAME ?? "Sistema de Gestión Comercial";
+const appName = process.env.NEXT_PUBLIC_APP_NAME ?? "PokéDeck TCG";
 
 export const metadata: Metadata = {
   title: appName,
-  description: "Sistema de gestión comercial para comercio minorista",
+  description: "Sistema de gestión comercial para tienda de Pokémon TCG",
 };
 
 export default function RootLayout({

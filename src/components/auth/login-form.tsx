@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { LogIn, ShieldCheck, Store, UserCheck } from "lucide-react";
+import { LogIn, ShieldCheck, UserCheck } from "lucide-react";
 import { loginAction, loginDemoAction } from "@/actions/auth.actions";
 import {
   Grid,
@@ -12,6 +12,7 @@ import {
   Text,
 } from "@/components/layout/primitives";
 import { FormField } from "@/components/shared/form-field";
+import { PokeballIcon } from "@/components/shared/pokeball-icon";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -78,14 +79,18 @@ export function LoginForm({ appName }: { appName: string }) {
 
   return (
     <Stack gap="lg" className="w-full max-w-md">
-      <Row justify="center" gap="sm" align="center">
-        <div className="flex size-10 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-xs">
-          <Store className="size-5" />
-        </div>
-        <Heading level={2}>{appName}</Heading>
-      </Row>
+      <Stack gap="xs" className="items-center text-center">
+        <Row justify="center" gap="sm" align="center">
+          <PokeballIcon className="size-10 drop-shadow-xs" />
+          <Heading level={2}>{appName}</Heading>
+        </Row>
+        <Text variant="small">
+          Gestión de stock, ventas y cuenta corriente · Pokémon TCG
+        </Text>
+      </Stack>
 
-      <Card className="shadow-sm">
+      <Card className="pt-0 shadow-md">
+        <div className="tcg-accent-bar h-1.5 w-full" />
         <CardHeader>
           <CardTitle>Iniciar sesión</CardTitle>
           <CardDescription>

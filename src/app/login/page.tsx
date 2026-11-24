@@ -12,12 +12,12 @@ export default async function LoginPage() {
   }
 
   const appName =
-    process.env.NEXT_PUBLIC_APP_NAME ?? "Sistema de Gestión Comercial";
+    process.env.NEXT_PUBLIC_APP_NAME ?? "PokéDeck TCG";
 
   return (
     <Stack
       as="main"
-      className="min-h-screen items-center justify-center bg-background p-4 sm:p-6"
+      className="tcg-login-bg min-h-screen items-center justify-center p-4 sm:p-6"
     >
       <LoginForm appName={appName} />
     </Stack>

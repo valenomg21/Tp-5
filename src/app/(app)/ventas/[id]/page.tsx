@@ -56,7 +56,7 @@ export default async function FacturaDetallePage({
   }
 
   const appName =
-    process.env.NEXT_PUBLIC_APP_NAME ?? "Sistema de Gestión Comercial";
+    process.env.NEXT_PUBLIC_APP_NAME ?? "PokéDeck TCG";
 
   return (
     <Stack gap="lg">

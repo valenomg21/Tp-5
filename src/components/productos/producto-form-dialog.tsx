@@ -152,7 +152,7 @@ export function ProductoFormDialog({
                   id="producto-codigo"
                   disabled={isPending}
                   aria-invalid={Boolean(fieldErrors.codigo)}
-                  placeholder="Ej. HE-001"
+                  placeholder="Ej. SOB-001"
                   value={codigo}
                   onChange={(e) => {
                     setCodigo(e.target.value);
@@ -203,7 +203,7 @@ export function ProductoFormDialog({
                 id="producto-descripcion"
                 disabled={isPending}
                 aria-invalid={Boolean(fieldErrors.descripcion)}
-                placeholder="Ej. Martillo carpintero 500 g"
+                placeholder="Ej. Sobre Scarlet & Violet: Prismatic Evolutions"
                 value={descripcion}
                 onChange={(e) => {
                   setDescripcion(e.target.value);

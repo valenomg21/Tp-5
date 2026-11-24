@@ -1,6 +1,6 @@
-# Sistema de Gestión Comercial
+# PokéDeck TCG — Sistema de Gestión Comercial
 
-Aplicación web para la gestión comercial de un comercio minorista: administración de productos, categorías y movimientos de stock, gestión de clientes con cuenta corriente y registro de pagos con recibos imprimibles, mostrador de facturación atómica con anulación, tablero con gráficos estadísticos y control de acceso por roles (`admin` y `vendedor`).
+Aplicación web para la gestión comercial de una tienda de **Pokémon TCG**: administración de catálogo (sobres, ETBs, cajas, mazos, singles y accesorios), categorías y movimientos de stock, gestión de clientes con cuenta corriente y registro de pagos con recibos imprimibles, mostrador de facturación atómica con anulación, tablero con gráficos estadísticos y control de acceso por roles (`admin` y `vendedor`).
 
 ---
 
@@ -51,7 +51,7 @@ La aplicación queda disponible en [http://localhost:3000](http://localhost:3000
 | `DATABASE_URL` | `file:./local.db` | Ruta SQLite local o URL `libsql://...` de Turso en producción |
 | `DATABASE_AUTH_TOKEN` | `""` | Vacío en local; token de autenticación de Turso en producción |
 | `SESSION_SECRET` | Cadena aleatoria (>= 16 chars) | Secreto para firmar las cookies `httpOnly` de sesión |
-| `NEXT_PUBLIC_APP_NAME` | `"Sistema de Gestión Comercial"` | Nombre visible del comercio en la aplicación y comprobantes |
+| `NEXT_PUBLIC_APP_NAME` | `"PokéDeck TCG"` | Nombre visible de la tienda en la aplicación y comprobantes |
 
 ---
 

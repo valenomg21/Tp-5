@@ -11,13 +11,13 @@ import {
   Package,
   Receipt,
   ShieldCheck,
-  Store,
   Users,
 } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "cn";
 import { logoutAction } from "@/actions/auth.actions";
 import { Row, Stack, Text } from "@/components/layout/primitives";
+import { PokeballIcon } from "@/components/shared/pokeball-icon";
 import { StatusBadge } from "@/components/shared/status-badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -121,13 +121,15 @@ export function AppShell({
   return (
     <div className="min-h-screen bg-background">
       <aside className="no-print hidden border-r border-sidebar-border bg-sidebar lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
+        <div className="tcg-accent-bar h-1 w-full shrink-0" />
         <div className="flex h-14 items-center gap-2.5 border-b border-sidebar-border px-4">
-          <div className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            <Store className="size-4" />
-          </div>
-          <Stack gap="xs" className="min-w-0">
-            <Text className="truncate font-semibold text-sidebar-foreground">
+          <PokeballIcon className="size-8" />
+          <Stack gap="xs" className="min-w-0 gap-0">
+            <Text className="truncate font-semibold leading-tight text-sidebar-foreground">
               {appName}
+            </Text>
+            <Text className="truncate text-[11px] font-medium text-amber-300/90">
+              Tienda Pokémon TCG
             </Text>
           </Stack>
         </div>
@@ -151,85 +153,98 @@ export function AppShell({
       </aside>
 
       <div className="flex min-h-screen min-w-0 flex-col overflow-x-clip lg:pl-64 print:pl-0">
-        <header className="no-print sticky top-0 z-30 flex h-14 items-center justify-between gap-3 border-b border-border bg-card/95 px-4 backdrop-blur sm:px-6">
-          <Row gap="sm" align="center" className="min-w-0">
-            <Sheet open={menuAbierto} onOpenChange={setMenuAbierto}>
-              <SheetTrigger
-                render={
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="icon-sm"
-                    className="lg:hidden"
-                    aria-label="Abrir menú de navegación"
+        <div className="no-print sticky top-0 z-30 bg-card/95 backdrop-blur">
+          <div className="tcg-accent-bar h-0.5 w-full" />
+          <header className="flex h-14 items-center justify-between gap-3 border-b border-border px-4 sm:px-6">
+            <Row gap="sm" align="center" className="min-w-0">
+              <Sheet open={menuAbierto} onOpenChange={setMenuAbierto}>
+                <SheetTrigger
+                  render={
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="icon-sm"
+                      className="lg:hidden"
+                      aria-label="Abrir menú de navegación"
+                    />
+                  }
+                >
+                  <Menu className="size-4" />
+                </SheetTrigger>
+                <SheetContent
+                  side="left"
+                  className="w-68 border-sidebar-border bg-sidebar p-0 text-sidebar-foreground"
+                >
+                  <div className="tcg-accent-bar h-1 w-full shrink-0" />
+                  <SheetHeader className="border-b border-sidebar-border px-4 py-3.5">
+                    <Row gap="sm" align="center">
+                      <PokeballIcon className="size-7" />
+                      <Stack gap="xs" className="min-w-0 gap-0">
+                        <SheetTitle className="truncate text-sm font-semibold text-sidebar-foreground">
+                          {appName}
+                        </SheetTitle>
+                        <Text className="truncate text-[11px] font-medium text-amber-300/90">
+                          Tienda Pokémon TCG
+                        </Text>
+                      </Stack>
+                    </Row>
+                  </SheetHeader>
+                  <SidebarNav
+                    usuario={usuario}
+                    pathname={pathname}
+                    onNavigate={() => setMenuAbierto(false)}
                   />
-                }
+                  <Separator className="bg-sidebar-border" />
+                  <div className="p-3">
+                    <Link
+                      href="/perfil"
+                      onClick={() => setMenuAbierto(false)}
+                      className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-sidebar-foreground/85 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                    >
+                      <KeyRound className="size-4 shrink-0" />
+                      <span>Mi perfil</span>
+                    </Link>
+                  </div>
+                </SheetContent>
+              </Sheet>
+
+              <Row gap="xs" align="center" className="min-w-0 lg:hidden">
+                <PokeballIcon className="size-5" />
+                <Text className="truncate font-semibold">{appName}</Text>
+              </Row>
+            </Row>
+
+            <Row gap="sm" align="center" className="shrink-0">
+              <Link
+                href="/perfil"
+                className="flex items-center gap-2 rounded-lg px-2 py-1 text-right transition-colors hover:bg-muted"
               >
-                <Menu className="size-4" />
-              </SheetTrigger>
-              <SheetContent side="left" className="w-68 p-0">
-                <SheetHeader className="border-b border-sidebar-border px-4 py-3.5">
-                  <Row gap="sm" align="center">
-                    <div className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                      <Store className="size-4" />
-                    </div>
-                    <SheetTitle className="truncate text-sm font-semibold">
-                      {appName}
-                    </SheetTitle>
-                  </Row>
-                </SheetHeader>
-                <SidebarNav
-                  usuario={usuario}
-                  pathname={pathname}
-                  onNavigate={() => setMenuAbierto(false)}
-                />
-                <Separator />
-                <div className="p-3">
-                  <Link
-                    href="/perfil"
-                    onClick={() => setMenuAbierto(false)}
-                    className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-foreground/80 hover:bg-accent"
-                  >
-                    <KeyRound className="size-4 shrink-0" />
-                    <span>Mi perfil</span>
-                  </Link>
-                </div>
-              </SheetContent>
-            </Sheet>
+                <Stack gap="xs" className="hidden text-right sm:flex">
+                  <Text className="text-sm leading-none font-medium">
+                    {usuario.nombre}
+                  </Text>
+                  <Text variant="small" className="leading-none">
+                    {usuario.email}
+                  </Text>
+                </Stack>
+                <StatusBadge variant={usuario.rol} />
+              </Link>
 
-            <Text className="truncate font-semibold lg:hidden">{appName}</Text>
-          </Row>
-
-          <Row gap="sm" align="center" className="shrink-0">
-            <Link
-              href="/perfil"
-              className="flex items-center gap-2 rounded-lg px-2 py-1 text-right transition-colors hover:bg-muted"
-            >
-              <Stack gap="xs" className="hidden text-right sm:flex">
-                <Text className="text-sm leading-none font-medium">
-                  {usuario.nombre}
-                </Text>
-                <Text variant="small" className="leading-none">
-                  {usuario.email}
-                </Text>
-              </Stack>
-              <StatusBadge variant={usuario.rol} />
-            </Link>
-
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              disabled={saliendo}
-              onClick={manejarSalida}
-            >
-              <LogOut className="size-4" />
-              <span className="hidden sm:inline">
-                {saliendo ? "Saliendo..." : "Salir"}
-              </span>
-            </Button>
-          </Row>
-        </header>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                disabled={saliendo}
+                onClick={manejarSalida}
+              >
+                <LogOut className="size-4" />
+                <span className="hidden sm:inline">
+                  {saliendo ? "Saliendo..." : "Salir"}
+                </span>
+              </Button>
+            </Row>
+          </header>
+        </div>
 
         <main className="mx-auto w-full max-w-7xl min-w-0 flex-1 p-4 sm:p-6">
           {children}

@@ -17,7 +17,7 @@ export default async function ProtectedAppLayout({
   }
 
   const appName =
-    process.env.NEXT_PUBLIC_APP_NAME ?? "Sistema de Gestión Comercial";
+    process.env.NEXT_PUBLIC_APP_NAME ?? "PokéDeck TCG";
 
   return (
     <AppShell usuario={usuario} appName={appName}>

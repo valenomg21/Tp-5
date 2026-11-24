@@ -34,12 +34,12 @@ ChartJS.register(
   Legend
 );
 
-const COLOR_BARRAS = "rgba(30, 58, 95, 0.86)";
-const COLOR_BARRAS_HOVER = "#1e3a5f";
+const COLOR_BARRAS = "rgba(29, 78, 216, 0.86)";
+const COLOR_BARRAS_HOVER = "#dc2626";
 const COLORES_FORMAS_PAGO: Record<FormaPago, string> = {
-  contado: "#1e3a5f",
-  tarjeta: "#0284c7",
-  cuenta_corriente: "#d97706",
+  contado: "#dc2626",
+  tarjeta: "#2563eb",
+  cuenta_corriente: "#eab308",
 };
 
 function formatearEtiquetaDiaCorto(fechaISO: string): string {
