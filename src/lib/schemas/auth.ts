@@ -11,6 +11,14 @@ export const loginSchema = z.object({
     .min(1, "La contraseña es obligatoria."),
 });
 
+export const loginDemoSchema = z
+  .object({
+    rol: z.enum(["admin", "vendedor"], {
+      error: "Seleccioná un rol demo válido.",
+    }),
+  })
+  .strict();
+
 export const cambiarPasswordSchema = z.object({
   actual: z
     .string({ error: "La contraseña actual es obligatoria." })
@@ -33,5 +41,6 @@ export const cambiarPasswordFormSchema = cambiarPasswordSchema
   });
 
 export type LoginInput = z.infer<typeof loginSchema>;
+export type LoginDemoInput = z.infer<typeof loginDemoSchema>;
 export type CambiarPasswordInput = z.infer<typeof cambiarPasswordSchema>;
 export type CambiarPasswordFormInput = z.infer<typeof cambiarPasswordFormSchema>;

@@ -9,11 +9,20 @@ import {
 import {
   cambiarContrasenaPropia,
   iniciarSesion,
+  iniciarSesionDemo,
 } from "@/services/auth.service";
 
 export async function loginAction(datosSinValidar: unknown) {
   return runPublicAction<UsuarioSesion>(async () => {
     const { usuario, token } = await iniciarSesion(datosSinValidar);
+    await establecerCookieSesion(token);
+    return usuario;
+  });
+}
+
+export async function loginDemoAction(datosSinValidar: unknown) {
+  return runPublicAction<UsuarioSesion>(async () => {
+    const { usuario, token } = await iniciarSesionDemo(datosSinValidar);
     await establecerCookieSesion(token);
     return usuario;
   });

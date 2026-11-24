@@ -1,10 +1,11 @@
 import bcrypt from "bcryptjs";
-import { eq } from "drizzle-orm";
+import { and, asc, eq } from "drizzle-orm";
 import { db } from "@/db";
 import { usuarios } from "@/db/schema";
 import { ApiError } from "@/lib/errors";
 import {
   cambiarPasswordSchema,
+  loginDemoSchema,
   loginSchema,
 } from "@/lib/schemas/auth";
 import type { UsuarioSesion } from "@/lib/session";
@@ -45,6 +46,69 @@ export async function iniciarSesion(datosSinValidar: unknown): Promise<{
       401,
       "CREDENCIALES_INVALIDAS",
       "Email o contraseña incorrectos."
+    );
+  }
+
+  const token = await firmarTokenSesion(fila.id);
+
+  return {
+    usuario: {
+      id: fila.id,
+      nombre: fila.nombre,
+      email: fila.email,
+      rol: fila.rol,
+    },
+    token,
+  };
+}
+
+const EMAIL_DEMO_POR_ROL = {
+  admin: "admin@comercio.test",
+  vendedor: "vendedor@comercio.test",
+} as const;
+
+// RF-U1 (modo demo): inicia sesión directa para el rol elegido sin validar contraseña,
+// manteniendo la verificación de usuario activo y la cookie firmada HMAC-SHA256.
+export async function iniciarSesionDemo(datosSinValidar: unknown): Promise<{
+  usuario: UsuarioSesion;
+  token: string;
+}> {
+  const { rol } = loginDemoSchema.parse(datosSinValidar);
+  const emailPreferido = EMAIL_DEMO_POR_ROL[rol];
+
+  const columnas = {
+    id: usuarios.id,
+    nombre: usuarios.nombre,
+    email: usuarios.email,
+    rol: usuarios.rol,
+  };
+
+  let [fila] = await db
+    .select(columnas)
+    .from(usuarios)
+    .where(
+      and(
+        eq(usuarios.email, emailPreferido),
+        eq(usuarios.rol, rol),
+        eq(usuarios.activo, true)
+      )
+    )
+    .limit(1);
+
+  if (!fila) {
+    [fila] = await db
+      .select(columnas)
+      .from(usuarios)
+      .where(and(eq(usuarios.rol, rol), eq(usuarios.activo, true)))
+      .orderBy(asc(usuarios.id))
+      .limit(1);
+  }
+
+  if (!fila) {
+    throw new ApiError(
+      404,
+      "NO_ENCONTRADO",
+      "No hay un usuario demo activo disponible para ese rol."
     );
   }
 
